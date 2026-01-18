@@ -1,1 +1,69 @@
-]
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// Структура для хранения информации о предмете
+struct Item {
+    double weight;  
+    double value;   
+    double ratio;   
+};
+
+// Функция сравнения для сортировки
+bool compare(Item a, Item b) {
+    return a.ratio > b.ratio;  
+}
+
+int main() {
+    setlocale(LC_ALL, "RU");
+    int n;
+    cout << "Введите количество предметов: ";
+    cin >> n;
+
+    double capacity;
+    cout << "Введите вместимость рюкзака: ";
+    cin >> capacity;
+
+    vector<Item> items(n);
+
+    
+    for (int i = 0; i < n; i++) {
+        cout << "\nПредмет " << i + 1 << ":" << endl;
+        cout << "Вес: ";
+        cin >> items[i].weight;
+        cout << "Ценность: ";
+        cin >> items[i].value;
+
+        
+        items[i].ratio = items[i].value / items[i].weight;
+    }
+
+    // Сортируем предметы по убыванию отношения ценности к весу от начала до конца
+    sort(items.begin(), items.end(), compare);
+
+    double totalValue = 0.0;  
+    double remainingCapacity = capacity;  
+
+    cout << "\nПроцесс заполнения рюкзака:" << endl;
+
+    // Заполняем рюкзак
+    for (int i = 0; i < n; i++) {
+        if (items[i].weight <= remainingCapacity) {
+            // Берём предмет целиком
+            totalValue += items[i].value;
+            remainingCapacity -= items[i].weight;
+            cout << "Взяли предмет " << i + 1 << " целиком" << endl;
+        }
+        else {
+            // Берём часть предмета
+            double fraction = remainingCapacity / items[i].weight;
+            totalValue += items[i].value * fraction;
+            cout << "Взяли " << fraction * 100 << "% предмета " << i + 1 << endl;
+            break;  
+        }
+    }
+
+    return 0;
+}
+
