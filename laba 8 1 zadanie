@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+
+int countWays(int position, int target) {
+    
+    if (position > target) return 0;
+
+    if (position == target) return 1;
+
+    return countWays(position + 1, target) + countWays(position + 2, target) + countWays(position + 3, target) + countWays(position + 4, target);
+}
+
+int main() {
+
+    setlocale(LC_ALL, "RU");
+    int N;
+    cout << "Введите точку назначения: ";
+    cin >> N;
+
+    int result = countWays(0, N);
+
+    cout << "Количество способов добраться до точки " << N << ": " << result << endl;
+
+    return 0;
+}
