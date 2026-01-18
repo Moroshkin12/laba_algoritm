@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "RU");
+    int nominals[] = { 5000, 1000, 500, 100, 50, 10, 5, 1 };
+    
+    int N;
+    cout << "Введите сумму для снятия : ";
+    cin >> N;
+    int result = 0;
+
+    
+    for (int i = 0; i < 8; i++) {
+        int cupcount = N / nominals[i];
+        if (cupcount > 0) {
+            result += cupcount;
+            cout << "Купюр номиналом " << nominals[i] << " руб. потребуется: " << cupcount << endl;
+        }
+
+        N = N % nominals[i];
+    }
+
+    cout << "\nМинимальное количество купюр и монет: " << result << endl;
+
+    return 0;
+}
